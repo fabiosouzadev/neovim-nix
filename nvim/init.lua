@@ -1,6 +1,11 @@
-local cmd = vim.cmd
-local fn = vim.fn
-local opt = vim.o
-local g = vim.g
-opt.number = true
-opt.relativenumber = true
+require "core"
+require("core.utils").load_mappings()
+
+-- {{{ Auto install lazy.nvim if when needed.
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  require("core.bootstrap").lazy(lazypath)
+end
+-- ------------------------------------------------------------------------- }}}
+vim.opt.rtp:prepend(lazypath)
+require "plugins"

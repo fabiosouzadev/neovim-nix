@@ -8,33 +8,25 @@ in rec {
     pkgs = legacyPackages.${system};
   in
     buildVimPlugin {
-      name = "fabiosouzadev";
+      name = "TheAltF4Stream";
       src = ../nvim;
-      buildPhase = ''
-        mkdir -p $out/nvim
-        mkdir -p $out/lua
-        rm init.lua
-      '';
-      preInstall = ''
-        cp -r after $out/after
-        rm -r after
-        cp -r lua $out/lua
-        rm -r lua
-        cp -r * $out/nvim
-      '';
     };
 
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
     pkgs = legacyPackages.${system};
-    fabiosouzadev-nvim = mkVimPlugin {inherit system;};
+    TheAltF4Stream-nvim = mkVimPlugin {inherit system;};
   in [
     # languages
+    vimPlugins.nvim-lspconfig
+
     # theme
     vimPlugins.tokyonight-nvim
+
     # extras
+
     # configuration
-    fabiosouzadev-nvim
+    TheAltF4Stream-nvim
   ];
 
   mkExtraPackages = {system}: let
@@ -44,18 +36,27 @@ in rec {
       config.allowUnfree = true;
     };
   in [
-    # language server
+    # language servers
     pkgs.lua-language-server
     pkgs.nil
 
     # formatters
-
-    # secrets
   ];
 
-  mkExtraConfig = ''
-  '';
+  mkExtraConfig = 
+  ''
+    require "core"
+    require("core.utils").load_mappings()
 
+    -- {{{ Auto install lazy.nvim if when needed.
+    local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+    if not vim.loop.fs_stat(lazypath) then
+      require("core.bootstrap").lazy(lazypath)
+    end
+    -- ------------------------------------------------------------------------- }}}
+    vim.opt.rtp:prepend(lazypath)
+    require "plugins"
+  '';
   mkNeovim = {system}: let
     inherit (pkgs) lib neovim;
     extraPackages = mkExtraPackages {inherit system;};

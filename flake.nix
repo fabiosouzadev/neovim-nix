@@ -1,21 +1,19 @@
 {
-  description = "Neovim configuration for fabiosouzadev (Fabio Souza) as a  plugin";
+  description = "Neovim configuration for TheAltF4Stream as a plugin";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   };
-  
 
   outputs = inputs @ {
     self,
-    nixpkgs,
     flake-parts,
+    nixpkgs,
     ...
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
-        lib = import ./lib;
+        lib = import ./lib {inherit inputs;};
       };
 
       systems = ["aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux"];
@@ -27,8 +25,9 @@
         pkgs,
         system,
         ...
-      }: 
-      {
+      }: let
+        inherit (pkgs) alejandra just mkShell;
+      in {
         apps = {
           nvim = {
             program = "${config.packages.neovim}/bin/nvim";
@@ -37,20 +36,12 @@
         };
 
         devShells = {
-          default = pkgs.mkShell {
-            name = "nvim-devShell";
-            buildInputs =  with pkgs;[
-              just
-              # Tools for Lua and Nix development, useful for editing files in this repo
-              lua-language-server
-              nil
-              stylua
-              luajitPackages.luacheck
-            ];
+          default = mkShell {
+            buildInputs = [just];
           };
         };
 
-        formatter = pkgs.alejandra;
+        formatter = alejandra;
 
         packages = {
           default = self.lib.mkVimPlugin {inherit system;};
