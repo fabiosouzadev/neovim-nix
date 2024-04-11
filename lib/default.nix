@@ -1,53 +1,40 @@
-{inputs, pkgs, ...}: let
+{inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
 in rec {
+
   mkVimPlugin = {system}: let
     inherit (pkgs) vimUtils;
     inherit (vimUtils) buildVimPlugin;
+    pkgs = legacyPackages.${system};
   in
     buildVimPlugin {
       name = "fabiosouzadev";
       src = ../nvim;
+      buildPhase = ''
+        mkdir -p $out/nvim
+        mkdir -p $out/lua
+        rm init.lua
+      '';
+      preInstall = ''
+        cp -r after $out/after
+        rm -r after
+        cp -r lua $out/lua
+        rm -r lua
+        cp -r * $out/nvim
+      '';
     };
 
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
-    fabiosouzadev = mkVimPlugin {inherit system;};
+    pkgs = legacyPackages.${system};
+    fabiosouzadev-nvim = mkVimPlugin {inherit system;};
   in [
     # languages
-    vimPlugins.nvim-lspconfig
-    vimPlugins.nvim-treesitter.withAllGrammars
-    vimPlugins.rust-tools-nvim
-    vimPlugins.vim-just
-
-    # telescope
-    vimPlugins.plenary-nvim
-    vimPlugins.telescope-nvim
-
     # theme
     vimPlugins.tokyonight-nvim
-
-    # floaterm
-    vimPlugins.vim-floaterm
-
     # extras
-    vimPlugins.ChatGPT-nvim
-    vimPlugins.comment-nvim
-    vimPlugins.copilot-lua
-    vimPlugins.gitsigns-nvim
-    vimPlugins.lualine-nvim
-    vimPlugins.noice-nvim
-    vimPlugins.nui-nvim
-    vimPlugins.nvim-colorizer-lua
-    vimPlugins.nvim-notify
-    vimPlugins.nvim-treesitter-context
-    vimPlugins.nvim-web-devicons
-    vimPlugins.omnisharp-extended-lsp-nvim
-    vimPlugins.rainbow-delimiters-nvim
-    vimPlugins.trouble-nvim
-
     # configuration
-    fabiosouzadev
+    fabiosouzadev-nvim
   ];
 
   mkExtraPackages = {system}: let
@@ -57,46 +44,16 @@ in rec {
       config.allowUnfree = true;
     };
   in [
-    # language servers
-    nodePackages."bash-language-server"
-    nodePackages."diagnostic-languageserver"
-    nodePackages."dockerfile-language-server-nodejs"
-    nodePackages."pyright"
-    nodePackages."typescript"
-    nodePackages."typescript-language-server"
-    nodePackages."vscode-langservers-extracted"
-    nodePackages."yaml-language-server"
-    ocamlPackages.dune_3
-    ocamlPackages.ocaml-lsp
-    ocamlPackages.ocamlformat
-    pkgs.cuelsp
-    pkgs.gleam
-    pkgs.gopls
-    pkgs.haskell-language-server
-    pkgs.jsonnet-language-server
+    # language server
     pkgs.lua-language-server
     pkgs.nil
-    pkgs.omnisharp-roslyn
-    pkgs.postgres-lsp
-    pkgs.rust-analyzer
-    pkgs.terraform-ls
 
     # formatters
-    pkgs.alejandra
-    pkgs.gofumpt
-    pkgs.golines
-    pkgs.rustfmt
-    pkgs.terraform
-    python3Packages.black
 
     # secrets
-    pkgs.doppler
   ];
 
   mkExtraConfig = ''
-    lua << EOF
-      require 'TheAltF4Stream'.init()
-    EOF
   '';
 
   mkNeovim = {system}: let

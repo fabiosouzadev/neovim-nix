@@ -15,7 +15,7 @@
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       flake = {
-        lib = import ./lib {inherit inputs;};
+        lib = import ./lib;
       };
 
       systems = ["aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux"];
@@ -38,6 +38,7 @@
 
         devShells = {
           default = pkgs.mkShell {
+            name = "nvim-devShell";
             buildInputs =  with pkgs;[
               just
               # Tools for Lua and Nix development, useful for editing files in this repo
