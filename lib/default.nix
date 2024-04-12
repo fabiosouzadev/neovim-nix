@@ -8,14 +8,14 @@ in rec {
     pkgs = legacyPackages.${system};
   in
     buildVimPlugin {
-      name = "TheAltF4Stream";
+      name = "fabiosouzadev-new";
       src = ../nvim;
     };
 
   mkNeovimPlugins = {system}: let
     inherit (pkgs) vimPlugins;
     pkgs = legacyPackages.${system};
-    TheAltF4Stream-nvim = mkVimPlugin {inherit system;};
+    fabiosouzadev-new-nvim = mkVimPlugin {inherit system;};
   in [
     # languages
     vimPlugins.nvim-lspconfig
@@ -26,7 +26,7 @@ in rec {
     # extras
 
     # configuration
-    TheAltF4Stream-nvim
+    fabiosouzadev-new-nvim
   ];
 
   mkExtraPackages = {system}: let
@@ -42,9 +42,9 @@ in rec {
 
     # formatters
   ];
-
   mkExtraConfig = 
   ''
+  lua << EOF
     require "core"
     require("core.utils").load_mappings()
 
@@ -56,7 +56,9 @@ in rec {
     -- ------------------------------------------------------------------------- }}}
     vim.opt.rtp:prepend(lazypath)
     require "plugins"
+  EOF
   '';
+
   mkNeovim = {system}: let
     inherit (pkgs) lib neovim;
     extraPackages = mkExtraPackages {inherit system;};
