@@ -1,1 +1,2 @@
-require 'fabiosouzadev'.init()
+require 'core'
+require 'plugins'
