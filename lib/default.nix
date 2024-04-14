@@ -17,13 +17,20 @@ in rec {
     pkgs = legacyPackages.${system};
     fabiosouzadev-new-nvim = mkVimPlugin {inherit system;};
   in [
+    # dependecies
+    vimPlugins.plenary-nvim
+    
     # languages
     vimPlugins.nvim-lspconfig
+    vimPlugins.nvim-treesitter.withAllGrammars
+    vimPlugins.vim-just
 
     # theme
     vimPlugins.tokyonight-nvim
 
     # extras
+    vimPlugins.vim-tmux-navigator
+    vimPlugins.todo-comments-nvim
 
     # configuration
     fabiosouzadev-new-nvim
@@ -37,15 +44,26 @@ in rec {
     };
   in [
     # language servers
+    nodePackages."bash-language-server"
+    nodePackages."diagnostic-languageserver"
+    nodePackages."dockerfile-language-server-nodejs"
+    nodePackages."pyright"
+    nodePackages."typescript"
+    nodePackages."typescript-language-server"
+    nodePackages."vscode-langservers-extracted"
+    nodePackages."yaml-language-server"
     pkgs.lua-language-server
     pkgs.nil
 
     # formatters
+    pkgs.alejandra
+    python3Packages.black
   ];
   mkExtraConfig = 
   ''
   lua << EOF
-    require 'fabiosouzadev'.init()
+    require 'core'
+    require 'plugins'
   EOF
   '';
 
