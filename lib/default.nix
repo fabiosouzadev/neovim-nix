@@ -118,8 +118,7 @@ in rec {
     pkgs.alejandra
     python3Packages.black
   ];
-  mkExtraConfig = 
-  ''
+  mkExtraConfig = ''
   lua << EOF
     require 'core'
     require 'plugins'
