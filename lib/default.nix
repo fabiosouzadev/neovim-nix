@@ -1,7 +1,6 @@
 {inputs}: let
   inherit (inputs.nixpkgs) legacyPackages;
 in rec {
-
   mkVimPlugin = {system}: let
     inherit (pkgs) vimUtils;
     inherit (vimUtils) buildVimPlugin;
@@ -24,12 +23,12 @@ in rec {
     # telescope
     vimPlugins.telescope-nvim
     vimPlugins.telescope-fzy-native-nvim
-    
+
     # treesitter
     vimPlugins.nvim-treesitter.withAllGrammars
     vimPlugins.nvim-treesitter-textobjects
     vimPlugins.nvim-treesitter-context
-    vimPlugins.nvim-ts-context-commentstring 
+    vimPlugins.nvim-ts-context-commentstring
     vimPlugins.nvim-ts-autotag
 
     # git
@@ -37,7 +36,7 @@ in rec {
     vimPlugins.neogit
     vimPlugins.gitsigns-nvim
     vimPlugins.vim-fugitive
-    
+
     # lsp
     vimPlugins.nvim-lspconfig
     vimPlugins.vim-just
@@ -116,13 +115,14 @@ in rec {
 
     # formatters
     pkgs.alejandra
+    pkgs.stylua
     python3Packages.black
   ];
   mkExtraConfig = ''
-  lua << EOF
-    require 'core'
-    require 'plugins'
-  EOF
+    lua << EOF
+      require 'core'
+      require 'plugins'
+    EOF
   '';
 
   mkNeovim = {system}: let

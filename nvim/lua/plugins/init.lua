@@ -6,6 +6,7 @@ require('Comment').setup({})
 require 'plugins.conform'
 require 'plugins.fidget'
 require 'plugins.neodev'
+require 'plugins.treesitter'
 require 'plugins.lsp'
 require('which-key').setup()
 
