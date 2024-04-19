@@ -2,12 +2,13 @@ require 'plugins.tokyonight'
 require 'plugins.mini'
 require 'plugins.todo'
 require 'plugins.floaterm'
-require('Comment').setup({})
+require 'plugins.comment'
 require 'plugins.conform'
 require 'plugins.fidget'
 require 'plugins.neodev'
 require 'plugins.treesitter'
 require 'plugins.lsp'
 require 'plugins.completion'
-require('which-key').setup()
+require 'plugins.telescope'
+require 'plugins.which-key'
 

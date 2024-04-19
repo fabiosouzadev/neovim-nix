@@ -3,15 +3,20 @@ require('conform').setup {
     lua = { 'stylua' },
     nix = { 'alejandra' },
     -- Conform will run multiple formatters sequentially
-    python = { 'isort', 'black' },
+    -- python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
-    javascript = { { 'prettierd', 'prettier' } },
+    -- javascript = { { 'prettierd', 'prettier' } },
   },
-  format_on_save = {
-    -- These options will be passed to conform.format()
-    timeout_ms = 500,
-    lsp_fallback = true,
-  },
+  format_on_save = function(bufnr)
+    -- Disable "format_on_save lsp_fallback" for languages that don't
+    -- have a well standardized coding style. You can add additional
+    -- languages here or re-enable it for the disabled ones.
+    -- local disable_filetypes = { c = true, cpp = true }
+    return {
+      timeout_ms = 500,
+      lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+    }
+  end,
 }
 
 vim.keymap.set('n', '<leader>f', function()

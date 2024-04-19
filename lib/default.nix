@@ -23,6 +23,7 @@ in rec {
     # telescope
     vimPlugins.telescope-nvim
     vimPlugins.telescope-fzy-native-nvim
+    vimPlugins.telescope-ui-select-nvim
 
     # treesitter
     vimPlugins.nvim-treesitter.withAllGrammars
