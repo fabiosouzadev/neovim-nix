@@ -53,8 +53,8 @@ in rec {
     vimPlugins.cmp-buffer # current buffer as completion source | <https://github.com/hrsh7th/cmp-buffer/>
     vimPlugins.cmp-path # file paths as completion source | <https://github.com/hrsh7th/cmp-path/>
     vimPlugins.cmp-nvim-lua # neovim lua API as completion source | <https://github.com/hrsh7th/cmp-nvim-lua/>
-    vimPlugins.cmp-cmdline # cmp command line suggestions
-    vimPlugins.cmp-cmdline-history # cmp command line history suggestions
+    #vimPlugins.cmp-cmdline # cmp command line suggestions
+    #vimPlugins.cmp-cmdline-history # cmp command line history suggestions
 
     # dap
     vimPlugins.nvim-dap
