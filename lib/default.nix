@@ -38,12 +38,15 @@ in rec {
     vimPlugins.vim-fugitive
 
     # lsp
+    vimPlugins.fidget-nvim
+    vimPlugins.neodev-nvim
     vimPlugins.nvim-lspconfig
     vimPlugins.vim-just
 
     # cmp
     vimPlugins.nvim-cmp # <https://github.com/hrsh7th/nvim-cmp>
     vimPlugins.cmp_luasnip # snippets autocompletion extension for nvim-cmp | <https://github.com/saadparwaiz1/cmp_luasnip/>
+    vimPlugins.luasnip # https://github.com/l3mon4d3/luasnip/
     vimPlugins.lspkind-nvim # vscode-like LSP pictograms | <https://github.com/onsails/lspkind.nvim/>
     vimPlugins.cmp-nvim-lsp # LSP as completion source | <https://github.com/hrsh7th/cmp-nvim-lsp/>
     vimPlugins.cmp-nvim-lsp-signature-help # <https://github.com/hrsh7th/cmp-nvim-lsp-signature-help/>
@@ -84,8 +87,6 @@ in rec {
     vimPlugins.vim-be-good
     vimPlugins.harpoon2
     vimPlugins.vim-floaterm
-    vimPlugins.fidget-nvim
-    vimPlugins.neodev-nvim
     vimPlugins.which-key-nvim
 
     # configuration

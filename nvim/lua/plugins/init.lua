@@ -8,5 +8,6 @@ require 'plugins.fidget'
 require 'plugins.neodev'
 require 'plugins.treesitter'
 require 'plugins.lsp'
+require 'plugins.completion'
 require('which-key').setup()
 
