@@ -31,7 +31,7 @@ require('telescope').setup {
 -- pickers = {}
 extensions = {
     ['ui-select'] = {
-    require('telescope.themes').get_dropdown(),
+        require('telescope.themes').get_dropdown(),
     },
 },
 }

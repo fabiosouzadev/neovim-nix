@@ -3,9 +3,9 @@ require('conform').setup {
     lua = { 'stylua' },
     nix = { 'alejandra' },
     -- Conform will run multiple formatters sequentially
-    -- python = { 'isort', 'black' },
+    python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
-    -- javascript = { { 'prettierd', 'prettier' } },
+    javascript = { { 'prettier', 'prettierd' } },
   },
   format_on_save = function(bufnr)
     -- Disable "format_on_save lsp_fallback" for languages that don't

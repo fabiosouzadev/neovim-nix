@@ -20,23 +20,20 @@ in rec {
     vimPlugins.plenary-nvim
     vimPlugins.nvim-web-devicons
 
+    # dashboard
+    vimPlugins.dashboard-nvim
+
     # telescope
     vimPlugins.telescope-nvim
-    vimPlugins.telescope-fzy-native-nvim
+    vimPlugins.telescope-fzf-native-nvim
     vimPlugins.telescope-ui-select-nvim
 
     # treesitter
     vimPlugins.nvim-treesitter.withAllGrammars
-    vimPlugins.nvim-treesitter-textobjects
     vimPlugins.nvim-treesitter-context
-    vimPlugins.nvim-ts-context-commentstring
-    vimPlugins.nvim-ts-autotag
 
     # git
-    vimPlugins.diffview-nvim
-    vimPlugins.neogit
     vimPlugins.gitsigns-nvim
-    vimPlugins.vim-fugitive
 
     # lsp
     vimPlugins.fidget-nvim
@@ -95,7 +92,7 @@ in rec {
   ];
 
   mkExtraPackages = {system}: let
-    inherit (pkgs) nodePackages ocamlPackages python3Packages;
+    inherit (pkgs) nodePackages ocamlPackages python3Packages python312Packages;
     pkgs = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
@@ -118,7 +115,9 @@ in rec {
     # formatters
     pkgs.alejandra
     pkgs.stylua
+    pkgs.prettierd
     python3Packages.black
+    python312Packages.isort
   ];
   mkExtraConfig = ''
     lua << EOF
