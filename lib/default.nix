@@ -20,9 +20,6 @@ in rec {
     vimPlugins.plenary-nvim
     vimPlugins.nvim-web-devicons
 
-    # dashboard
-    vimPlugins.dashboard-nvim
-
     # telescope
     vimPlugins.telescope-nvim
     vimPlugins.telescope-fzf-native-nvim
