@@ -96,21 +96,23 @@ in rec {
     };
   in [
     # language servers
-    nodePackages."bash-language-server"
-    nodePackages."diagnostic-languageserver"
-    nodePackages."dockerfile-language-server-nodejs"
-    nodePackages."pyright"
-    nodePackages."typescript"
-    nodePackages."typescript-language-server"
-    nodePackages."vscode-langservers-extracted"
-    nodePackages."yaml-language-server"
-    nodePackages."prettier"
+    nodePackages.bash-language-server
+    nodePackages.diagnostic-languageserver
+    nodePackages.dockerfile-language-server-nodejs
+    nodePackages.pyright
+    nodePackages.typescript
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    nodePackages.yaml-language-server
+    nodePackages.prettier
+    nodePackages.intelephense
     pkgs.lua-language-server
     pkgs.nil
     pkgs.gopls
 
     # formatters
     pkgs.alejandra
+    pkgs.nixpkgs-fmt
     pkgs.stylua
     pkgs.prettierd
     python3Packages.black

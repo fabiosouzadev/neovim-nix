@@ -181,7 +181,10 @@ local language_servers = {
   nil_ls = {
     settings = {
       ['nil'] = {
-        formatting = { command = { 'alejandra' } },
+        testSetting = 42,
+        formatting = {
+          command = { 'nixpkgs-fmt' },
+        },
       },
     },
   },
