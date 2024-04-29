@@ -1,7 +1,7 @@
 require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
-    nix = { 'alejandra' },
+    nix = { 'nixpkgs-fmt' },
     -- Conform will run multiple formatters sequentially
     python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
@@ -13,13 +13,16 @@ require('conform').setup {
     -- languages here or re-enable it for the disabled ones.
     -- local disable_filetypes = { c = true, cpp = true }
     return {
-      timeout_ms = 500,
+      timeout_ms = 1000,
       lsp_fallback = true,
     }
   end,
 }
 
-vim.keymap.set('n', '<leader>f', function()
-  require('conform').format { async = true, lsp_fallback = true }
+vim.keymap.set({ 'n', 'v' }, '<leader>f', function()
+  require('conform').format {
+    async = true,
+    lsp_fallback = true,
+    timeout_ms = 1000,
+  }
 end, { desc = '[F]ormat buffer' })
-
