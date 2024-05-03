@@ -1,5 +1,5 @@
 require 'plugins.tokyonight'
-require 'plugins.oil'
+-- require 'plugins.oil'
 require 'plugins.bufferline'
 require 'plugins.mini'
 -- require 'plugins.todo'

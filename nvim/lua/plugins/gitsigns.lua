@@ -5,13 +5,13 @@
 -- See `:help gitsigns` to understand what the configuration keys do
 -- Adds git related signs to the gutter, as well as utilities for managing cha
 require('gitsigns').setup {
-  -- signs = {
-  --   add = { text = '+' },
-  --   change = { text = '~' },
-  --   delete = { text = '_' },
-  --   topdelete = { text = '‾' },
-  --   changedelete = { text = '~' },
-  -- },
+  signs = {
+    add = { text = '+' },
+    change = { text = '~' },
+    delete = { text = '_' },
+    topdelete = { text = '‾' },
+    changedelete = { text = '~' },
+  },
   current_line_blame = true,
   on_attach = function(bufnr)
     local gitsigns = require 'gitsigns'
