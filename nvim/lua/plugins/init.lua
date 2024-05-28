@@ -1,6 +1,6 @@
 require 'plugins.tokyonight'
 -- require 'plugins.oil'
-require 'plugins.bufferline'
+-- require 'plugins.bufferline'
 require 'plugins.mini'
 -- require 'plugins.todo'
 require 'plugins.floaterm'
