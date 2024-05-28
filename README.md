@@ -23,6 +23,12 @@ This flake provides a `neovim` derivation that can be used as a packge on any Ni
 
 #### Run in shell
 
+- Run `neovim` directly from directory with:
+
+```shell
+$ nix run .#neovim
+```
+
 - Run `neovim` directly with:
 
 ```shell
