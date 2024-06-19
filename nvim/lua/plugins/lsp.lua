@@ -142,7 +142,7 @@ local language_servers = {
   -- tsserver = {},
   --
   diagnosticls = {
-    filetypes = { 'python' },
+    filetypes = { 'python', 'php' },
     init_options = {
       filetypes = {
         python = 'black',
@@ -206,6 +206,7 @@ local language_servers = {
       },
     },
   },
+  intelephense = {},
 }
 
 -- Initialize servers

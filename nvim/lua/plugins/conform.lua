@@ -6,6 +6,7 @@ require('conform').setup {
     python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
     javascript = { { 'prettier', 'prettierd' } },
+    php = { 'php_cs_fixer' },
   },
   format_on_save = function(bufnr)
     -- Disable "format_on_save lsp_fallback" for languages that don't

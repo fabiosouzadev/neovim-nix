@@ -95,7 +95,7 @@ rec {
 
   mkExtraPackages = { system }:
     let
-      inherit (pkgs) nodePackages ocamlPackages python3Packages python312Packages;
+      inherit (pkgs) nodePackages ocamlPackages python3Packages python312Packages php83Packages;
       pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -106,7 +106,6 @@ rec {
       nodePackages.bash-language-server
       nodePackages.diagnostic-languageserver
       nodePackages.dockerfile-language-server-nodejs
-      nodePackages.pyright
       nodePackages.typescript
       nodePackages.typescript-language-server
       nodePackages.vscode-langservers-extracted
@@ -116,6 +115,8 @@ rec {
       pkgs.lua-language-server
       pkgs.nil
       pkgs.gopls
+      pkgs.emmet-ls
+      pkgs.pyright
 
       # formatters
       pkgs.alejandra
@@ -124,6 +125,7 @@ rec {
       pkgs.prettierd
       python3Packages.black
       python312Packages.isort
+      php83Packages.php-cs-fixer
     ];
   mkExtraConfig = ''
     lua << EOF
