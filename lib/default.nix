@@ -95,7 +95,7 @@ rec {
 
   mkExtraPackages = { system }:
     let
-      inherit (pkgs) nodePackages ocamlPackages python3Packages python312Packages php83Packages;
+      inherit (pkgs) nodePackages python3Packages python312Packages php83Packages;
       pkgs = import inputs.nixpkgs {
         inherit system;
         config.allowUnfree = true;
@@ -117,6 +117,7 @@ rec {
       pkgs.gopls
       pkgs.emmet-ls
       pkgs.pyright
+      pkgs.phpactor
 
       # formatters
       pkgs.alejandra
