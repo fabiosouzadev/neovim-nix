@@ -6,7 +6,18 @@ require('conform').setup {
     python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
     javascript = { { 'prettier', 'prettierd' } },
-    php = { 'php_cs_fixer' },
+    php = { 'php-cs-fixer' },
+  },
+  formatters = {
+    ['php-cs-fixer'] = {
+      command = 'php-cs-fixer',
+      args = {
+        'fix',
+        '--rules=@PSR12', -- Formatting preset. Other presets are available, see the php-cs-fixer docs.
+        '$FILENAME',
+      },
+      stdin = false,
+    },
   },
   format_on_save = function(bufnr)
     -- Disable "format_on_save lsp_fallback" for languages that don't
