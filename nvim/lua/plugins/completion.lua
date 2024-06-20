@@ -1,8 +1,10 @@
 local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local luasnip = require 'luasnip'
+local codeium = require 'codeium'
 
 luasnip.config.setup {}
+codeium.setup {}
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 cmp.setup {
@@ -30,6 +32,7 @@ cmp.setup {
         buffer = '[BUF]',
         path = '[PATH]',
         treesitter = '[TREE]',
+        codeium = '[CODEIUM]',
         -- cmp_tabnine = "[TABNINE]
       },
     },
@@ -111,6 +114,7 @@ cmp.setup {
     --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
   },
   sources = {
+    { name = 'codeium' },
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help', keyword_length = 3 },

@@ -56,6 +56,9 @@ rec {
       #vimPlugins.cmp-cmdline # cmp command line suggestions
       #vimPlugins.cmp-cmdline-history # cmp command line history suggestions
 
+      #IA
+      vimPlugins.codeium-nvim
+
       # dap
       vimPlugins.nvim-dap
       vimPlugins.nvim-dap-ui
