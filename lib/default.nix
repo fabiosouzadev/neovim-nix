@@ -1,13 +1,13 @@
 { inputs }:
-let
-  inherit (inputs.nixpkgs) legacyPackages;
-in
 rec {
   mkVimPlugin = { system }:
     let
       inherit (pkgs) vimUtils;
       inherit (vimUtils) buildVimPlugin;
-      pkgs = legacyPackages.${system};
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
     in
     buildVimPlugin {
       name = "fabiosouzadev-new";
@@ -145,7 +145,10 @@ rec {
     let
       inherit (pkgs) lib neovim;
       extraPackages = mkExtraPackages { inherit system; };
-      pkgs = legacyPackages.${system};
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
       start = mkNeovimPlugins { inherit system; };
     in
     neovim.override {
