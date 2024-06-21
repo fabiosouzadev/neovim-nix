@@ -17,7 +17,10 @@ rec {
   mkNeovimPlugins = { system }:
     let
       inherit (pkgs) vimPlugins;
-      pkgs = legacyPackages.${system};
+      pkgs = import inputs.nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
       fabiosouzadev-new-nvim = mkVimPlugin { inherit system; };
     in
     [
