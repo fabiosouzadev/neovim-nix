@@ -2,9 +2,11 @@ local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local luasnip = require 'luasnip'
 local codeium = require 'codeium'
+local sg = require 'sg'
 
 luasnip.config.setup {}
 codeium.setup {}
+sg.setup {}
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 cmp.setup {
@@ -33,7 +35,7 @@ cmp.setup {
         path = '[PATH]',
         treesitter = '[TREE]',
         codeium = '[CODEIUM]',
-        -- cmp_tabnine = "[TABNINE]
+        cmp_tabnine = '[TABNINE]',
       },
     },
   },
@@ -122,6 +124,6 @@ cmp.setup {
     { name = 'buffer' },
     { name = 'path' },
     { name = 'treesitter' },
-    -- { name = "cmp_tabnine" },
+    { name = 'cmp_tabnine' },
   },
 }

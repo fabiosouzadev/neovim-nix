@@ -60,7 +60,9 @@ rec {
       #vimPlugins.cmp-cmdline-history # cmp command line history suggestions
 
       #IA
+      vimPlugins.cmp-tabnine #https://github.com/tzachar/cmp-tabnine/
       vimPlugins.codeium-nvim
+      vimPlugins.sg-nvim
 
       # dap
       vimPlugins.nvim-dap
