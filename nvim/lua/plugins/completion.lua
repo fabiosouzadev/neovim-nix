@@ -27,6 +27,9 @@ cmp.setup {
         -- buffer = '[Buffer]',
         -- path = '[Path]',
         -- -- cmp_tabnine = "[TabNine]",
+        cmp_tabnine = '[TABNINE]',
+        codeium = '[CODEIUM]',
+        cody = '[CODY]',
         nvim_lua = '[API]',
         nvim_lsp = '[LSP]',
         nvim_lsp_signature_help = '[LSP]',
@@ -34,8 +37,6 @@ cmp.setup {
         buffer = '[BUF]',
         path = '[PATH]',
         treesitter = '[TREE]',
-        codeium = '[CODEIUM]',
-        cmp_tabnine = '[TABNINE]',
       },
     },
   },
@@ -116,7 +117,9 @@ cmp.setup {
     --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
   },
   sources = {
+    { name = 'cmp_tabnine' },
     { name = 'codeium' },
+    { name = 'cody' },
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help', keyword_length = 3 },
@@ -124,6 +127,5 @@ cmp.setup {
     { name = 'buffer' },
     { name = 'path' },
     { name = 'treesitter' },
-    { name = 'cmp_tabnine' },
   },
 }
