@@ -132,12 +132,13 @@ rec {
 
       # formatters
       pkgs.alejandra
-      pkgs.nixpkgs-fmt
       pkgs.stylua
       pkgs.prettierd
+      pkgs.yamlfmt
       python3Packages.black
       python312Packages.isort
       php83Packages.php-cs-fixer
+
     ];
   mkExtraConfig = ''
     lua << EOF

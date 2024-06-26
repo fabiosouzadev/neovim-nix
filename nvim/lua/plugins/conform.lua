@@ -1,12 +1,13 @@
 require('conform').setup {
   formatters_by_ft = {
     lua = { 'stylua' },
-    nix = { 'nixpkgs-fmt' },
+    nix = { 'alejandra' },
     -- Conform will run multiple formatters sequentially
     python = { 'isort', 'black' },
     -- Use a sub-list to run only the first available formatter
     javascript = { { 'prettier', 'prettierd' } },
     php = { 'php-cs-fixer' },
+    yaml = { 'yamlfmt' },
   },
   formatters = {
     ['php-cs-fixer'] = {
