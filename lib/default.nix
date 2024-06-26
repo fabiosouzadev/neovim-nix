@@ -27,6 +27,8 @@ rec {
       # dependecies
       vimPlugins.plenary-nvim
       vimPlugins.nvim-web-devicons
+      vimPlugins.nui-nvim # ChatGPT-nvim
+      vimPlugins.trouble-nvim #ChatGPT-nvim
 
       # telescope
       vimPlugins.telescope-nvim
@@ -61,8 +63,9 @@ rec {
 
       #IA
       vimPlugins.cmp-tabnine #https://github.com/tzachar/cmp-tabnine/
-      vimPlugins.codeium-nvim
-      vimPlugins.sg-nvim
+      vimPlugins.codeium-nvim #https://github.com/Exafunction/codeium.nvim
+      vimPlugins.sg-nvim #https://github.com/sourcegraph/sg.nvim
+      vimPlugins.ChatGPT-nvim
 
       # dap
       vimPlugins.nvim-dap

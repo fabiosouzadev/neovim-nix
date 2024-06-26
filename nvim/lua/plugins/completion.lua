@@ -3,10 +3,12 @@ local lspkind = require 'lspkind'
 local luasnip = require 'luasnip'
 local codeium = require 'codeium'
 local sg = require 'sg'
+local chatgpt = require 'chatgpt'
 
 luasnip.config.setup {}
 codeium.setup {}
 sg.setup {}
+chatgpt.setup {}
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 cmp.setup {
@@ -27,9 +29,9 @@ cmp.setup {
         -- buffer = '[Buffer]',
         -- path = '[Path]',
         -- -- cmp_tabnine = "[TabNine]",
-        cmp_tabnine = '[TABNINE]',
-        codeium = '[CODEIUM]',
         cody = '[CODY]',
+        codeium = '[CODEIUM]',
+        cmp_tabnine = '[TABNINE]',
         nvim_lua = '[API]',
         nvim_lsp = '[LSP]',
         nvim_lsp_signature_help = '[LSP]',
@@ -117,9 +119,9 @@ cmp.setup {
     --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
   },
   sources = {
-    { name = 'cmp_tabnine' },
-    { name = 'codeium' },
     { name = 'cody' },
+    { name = 'codeium' },
+    { name = 'cmp_tabnine' },
     { name = 'nvim_lua' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help', keyword_length = 3 },
