@@ -142,13 +142,16 @@ local language_servers = {
   -- tsserver = {},
   --
   diagnosticls = {
-    filetypes = { 'python' },
+    filetypes = { 'python', 'php', 'nix' },
     init_options = {
       filetypes = {
         python = 'black',
+        -- php = '',
+        nix = 'alejandra',
       },
       formatFiletypes = {
         python = { 'black' },
+        nix = { 'alejandra' },
       },
       formatters = {
         black = {
@@ -183,7 +186,7 @@ local language_servers = {
       ['nil'] = {
         testSetting = 42,
         formatting = {
-          command = { 'nixpkgs-fmt' },
+          command = { 'alejandra' },
         },
       },
     },
@@ -295,6 +298,7 @@ local language_servers = {
     },
   },
   phpactor = {},
+  emmet_language_server = {},
 }
 
 -- Initialize servers
