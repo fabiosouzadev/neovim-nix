@@ -1,10 +1,15 @@
-{inputs}: rec {
+{inputs, ...}: rec {
   mkVimPlugin = {system}: let
     inherit (pkgs) vimUtils;
     inherit (vimUtils) buildVimPlugin;
+
     pkgs = import inputs.nixpkgs {
       inherit system;
-      config = {allowUnfree = true;};
+      overlays = [
+        inputs.awesome-neovim-plugins.overlays.default
+        inputs.nixneovimplugins.overlays.default
+      ];
+      config.allowUnfree = true;
     };
   in
     buildVimPlugin {
@@ -13,11 +18,16 @@
     };
 
   mkNeovimPlugins = {system}: let
-    inherit (pkgs) vimPlugins;
     pkgs = import inputs.nixpkgs {
       inherit system;
-      config = {allowUnfree = true;};
+      overlays = [
+        inputs.awesome-neovim-plugins.overlays.default
+        inputs.nixneovimplugins.overlays.default
+      ];
+      config.allowUnfree = true;
     };
+    inherit (pkgs) vimPlugins;
+    inherit (pkgs) awesomeNeovimPlugins;
     fabiosouzadev-new-nvim = mkVimPlugin {inherit system;};
   in [
     # dependecies
@@ -25,6 +35,9 @@
     vimPlugins.nvim-web-devicons
     vimPlugins.nui-nvim # ChatGPT-nvim
     vimPlugins.trouble-nvim #ChatGPT-nvim
+    awesomeNeovimPlugins.dressing-nvim #avante-nvim
+    awesomeNeovimPlugins.img-clip-nvim #avante-nvim
+    awesomeNeovimPlugins.render-markdown-nvim #avante-nvim
 
     # telescope
     vimPlugins.telescope-nvim
@@ -60,8 +73,11 @@
     #IA
     vimPlugins.cmp-tabnine #https://github.com/tzachar/cmp-tabnine/
     vimPlugins.codeium-nvim #https://github.com/Exafunction/codeium.nvim
-    vimPlugins.sg-nvim #https://github.com/sourcegraph/sg.nvim
-    vimPlugins.ChatGPT-nvim
+    # vimPlugins.sg-nvim #https://github.com/sourcegraph/sg.nvim
+    # vimPlugins.ChatGPT-nvim
+
+    #awesomeNeovimPlugins.avante-nvim # not working
+    awesomeNeovimPlugins.codecompanion-nvim
 
     # dap
     vimPlugins.nvim-dap
@@ -102,11 +118,15 @@
   ];
 
   mkExtraPackages = {system}: let
-    inherit (pkgs) nodePackages python3Packages python312Packages php83Packages;
     pkgs = import inputs.nixpkgs {
       inherit system;
+      overlays = [
+        inputs.awesome-neovim-plugins.overlays.default
+        inputs.nixneovimplugins.overlays.default
+      ];
       config.allowUnfree = true;
     };
+    inherit (pkgs) nodePackages python3Packages python312Packages php83Packages;
   in [
     # language servers
     nodePackages.bash-language-server
@@ -125,6 +145,7 @@
     # pkgs.emmet-ls
     pkgs.pyright
     pkgs.phpactor
+    pkgs.cargo
 
     # formatters
     pkgs.alejandra
@@ -143,12 +164,16 @@
   '';
 
   mkNeovim = {system}: let
-    inherit (pkgs) lib neovim;
-    extraPackages = mkExtraPackages {inherit system;};
     pkgs = import inputs.nixpkgs {
       inherit system;
+      overlays = [
+        inputs.awesome-neovim-plugins.overlays.default
+        inputs.nixneovimplugins.overlays.default
+      ];
       config.allowUnfree = true;
     };
+    inherit (pkgs) lib neovim;
+    extraPackages = mkExtraPackages {inherit system;};
     start = mkNeovimPlugins {inherit system;};
   in
     neovim.override {

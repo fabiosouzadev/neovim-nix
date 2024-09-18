@@ -2,13 +2,13 @@ local cmp = require 'cmp'
 local lspkind = require 'lspkind'
 local luasnip = require 'luasnip'
 local codeium = require 'codeium'
-local sg = require 'sg'
-local chatgpt = require 'chatgpt'
+-- local sg = require 'sg'
+-- local chatgpt = require 'chatgpt'
 
 luasnip.config.setup {}
 codeium.setup {}
-sg.setup {}
-chatgpt.setup {}
+-- sg.setup {}
+-- chatgpt.setup {}
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 cmp.setup {
