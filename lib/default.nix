@@ -73,7 +73,7 @@
     #IA
     vimPlugins.cmp-tabnine #https://github.com/tzachar/cmp-tabnine/
     vimPlugins.codeium-nvim #https://github.com/Exafunction/codeium.nvim
-    # vimPlugins.sg-nvim #https://github.com/sourcegraph/sg.nvim
+    vimPlugins.sg-nvim #https://github.com/sourcegraph/sg.nvim
     # vimPlugins.ChatGPT-nvim
 
     #awesomeNeovimPlugins.avante-nvim # not working
