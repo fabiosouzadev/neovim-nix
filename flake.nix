@@ -1,54 +1,43 @@
 {
-  description = "Neovim configuration for fabiovanderleisouza as a plugin";
-
+  description = "@fabiosouzadev's Neovim flake";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     awesome-neovim-plugins.url = "github:m15a/flake-awesome-neovim-plugins";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
   };
 
-  outputs = inputs @ {
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
+  outputs = {
     self,
-    flake-parts,
     nixpkgs,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      flake = {
-        lib = import ./lib {inherit inputs;};
-      };
-
-      systems = ["aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux"];
-
-      perSystem = {
-        config,
-        self',
-        inputs',
-        pkgs,
-        system,
-        ...
-      }: let
-        inherit (pkgs) alejandra just mkShell;
-      in {
-        apps = {
-          nvim = {
-            program = "${config.packages.neovim}/bin/nvim";
-            type = "app";
-          };
-        };
-
-        devShells = {
-          default = mkShell {
-            buildInputs = [just];
-          };
-        };
-
-        formatter = alejandra;
-
-        packages = {
-          default = self.lib.mkVimPlugin {inherit system;};
-          neovim = self.lib.mkNeovim {inherit system;};
-        };
-      };
+    neovim-nightly-overlay,
+    awesome-neovim-plugins,
+    nixneovimplugins,
+  }: let
+    overlayFlakeInputs = prev: final: {
+      neovim = neovim-nightly-overlay.packages.x86_64-linux.neovim;
     };
+    pkgs = import nixpkgs {
+      system = "x86_64-linux";
+      overlays = [overlayFlakeInputs];
+    };
+  in {
+    packages.x86_64-linux.default = pkgs.neovim;
+    apps.x86_64-linux.default = {
+      type = "app";
+      program = "${pkgs.neovim}/bin/nvim";
+    };
+  };
 }

@@ -1,70 +1,107 @@
 # neovim-nix
-Neovim configuration for fabiosouzadev as a plugin.
-
-<!-- [![Test flake](https://github.com/ALT-F4-LLC/thealtf4stream.nvim/actions/workflows/flake.yaml/badge.svg)](https://github.com/ALT-F4-LLC/thealtf4stream.nvim/actions/workflows/flake.yaml) -->
-<!---->
-<!-- ![Preview](https://github.com/ALT-F4-LLC/thealtf4stream.nvim/blob/main/lib/preview.webp) -->
-
-## Install
-
-### Neovim
-
-> [!WARNING]
-> By default, this setup was designed for Nix and needs a stable example Lua configuration.
-
-- WIP
-
-### Nix
-
-This flake provides a `neovim` derivation that can be used as a packge on any Nix supported system. This is a "wrapped" variant of Neovim which includes configuration and dependencies (language servers, formatters, etc).
-
-> [!NOTE]
-> The `neovim` derivation provides an identical editor expierence on any `nix` supported host.
-
-#### Run in shell
+fabiosouzadev's Neovim flake;
+## WIP
+:with
+### Run in shell
 
 - Run `neovim` directly from directory with:
 
 ```shell
-$ nix run .#neovim
+$ nix run
 ```
 
 - Run `neovim` directly with:
 
 ```shell
-$ nix run github:fabiosouzadev/neovim-nix#neovim
+$ nix run github:fabiosouzadev/neovim-nix
 ```
 
 - Run `neovim` in new shell with:
 
 ```shell
-$ nix shell github:fabiosouzadev/neovim-nix#neovim
+$ nix shell github:fabiosouzadev/neovim-nix
 $ neovim
 ```
 
-#### Add to flake
+## To use the overlay
 
-- Add to `flake.nix` as an input:
+### with Flakes
+
+If you are using [flakes] to configure your system, you can either reference the
+package provided by this flake directly, e.g. for nixos:
 
 ```nix
-inputs = {
+{ inputs, pkgs, ... }:
+{
+  programs.neovim = {
+    enable = true;
+    package = inputs.fabiosouzadev-nvim.packages.${pkgs.system}.default;
+  };
+
+  # or
+
+  environment.systemPackages = [
+    inputs.fabiosouzadev-nvim.packages.${pkgs.system}.default
+  ];
+}
+```
+
+or you can apply the overlay to your package set, e.g for home-manager:
+
+```nix
+{
+  inputs = {
+    ...
     fabiosouzadev-nvim.url = "github:fabiosouzadev/neovim-nix";
-};
+  };
 
+  outputs = { self, ... }@inputs:
+    let
+      overlays = [
+        inputs.fabiosouzadev-nvim.overlays.default
+      ];
+    in
+      homeConfigurations = {
+        macbook-pro = inputs.home-manager.lib.homeManagerConfiguration {
+          modules = [
+            {
+              nixpkgs.overlays = overlays;
+            };
+          ];
+        };
+      };
+}
 ```
+### without Flakes
 
-- (option a): Add to `environment.systemPackages` configuration:
+Add the overlay to your home.nix (home-manager) or configuration.nix (nixos):
 
 ```nix
-environment.systemPackages = [
-  inputs.fabiosouzadev-nvim.packages.${pkgs.system}.neovim
-];
+{
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = "https://github.com/fabiosouzadev/neovim-nix/archive/master.tar.gz";
+    }))
+  ];
+}
 ```
-
-- (option b): Add to `home-manager` configuration:
-
+Due to some nixpkgs breaking changes if you are using NixOS 24.05 use the overlay below <br/>
+*also requires that you have the nixpkgs-unstable `nix-channel`*
 ```nix
-programs.neovim = inputs.fabiosouzadev-nvim.lib.mkHomeManager {
-  system = pkgs.system;
-};
+{
+  nixpkgs.config = {
+    packageOverrides = pkgs: let
+      pkgs' = import <nixpkgs-unstable> {
+        inherit (pkgs) system;
+        overlays = [
+          (import (builtins.fetchTarball {
+            url = "https://github.com/fabiosouzadev/neovim-nix/archive/master.tar.gz";
+          }))
+        ];
+      };
+    in {
+      inherit (pkgs') neovim;
+    };
+  };
+}
 ```
