@@ -8,6 +8,12 @@
     };
     awesome-neovim-plugins.url = "github:m15a/flake-awesome-neovim-plugins";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
+
+    ## pluginsFromGithub
+    avante-src = {
+      url = "github:yetone/avante.nvim";
+      flake = false;
+    };
   };
 
   nixConfig = {
@@ -19,25 +25,37 @@
     ];
   };
 
-  outputs = {
+  outputs = inputs @ {
     self,
     nixpkgs,
     neovim-nightly-overlay,
     awesome-neovim-plugins,
     nixneovimplugins,
+    ...
   }: let
-    overlayFlakeInputs = prev: final: {
-      neovim = neovim-nightly-overlay.packages.x86_64-linux.neovim;
+    system = "x86_64-linux";
+    overlayNightlyNeovim = prev: final: {
+      neovim = neovim-nightly-overlay.packages.${system}.neovim;
+      vimPlugins =
+        final.vimPlugins
+        // import ./plugins/pluginsFromGithub.nix {
+          inherit inputs;
+          pkgs = prev;
+        };
     };
+    overlayMyCustomNeovim = prev: final: {
+      myCustomNeovim = import ./mkCustomNeovim.nix {pkgs = prev;};
+    };
+
     pkgs = import nixpkgs {
       system = "x86_64-linux";
-      overlays = [overlayFlakeInputs];
+      overlays = [overlayNightlyNeovim awesome-neovim-plugins.overlays.default nixneovimplugins.overlays.default overlayMyCustomNeovim];
     };
   in {
-    packages.x86_64-linux.default = pkgs.neovim;
+    packages.x86_64-linux.default = pkgs.myCustomNeovim;
     apps.x86_64-linux.default = {
       type = "app";
-      program = "${pkgs.neovim}/bin/nvim";
+      program = "${pkgs.myCustomNeovim}/bin/nvim";
     };
   };
 }

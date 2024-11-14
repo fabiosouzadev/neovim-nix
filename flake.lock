@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "avante-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1731528964,
+        "narHash": "sha256-lyBdJHka+dhiNUpMznAqqLbbnQ99m/fY+9wfPTANoqQ=",
+        "owner": "yetone",
+        "repo": "avante.nvim",
+        "rev": "fb7567ac242fcd0e6013c9a2e735840a3d6fb2fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yetone",
+        "repo": "avante.nvim",
+        "type": "github"
+      }
+    },
     "awesome-neovim-plugins": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -7,11 +23,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1731432362,
-        "narHash": "sha256-N1YtMrgrc2oYn5WsYCG6foAabG0N9KeMVETzsFWT8HM=",
+        "lastModified": 1731518654,
+        "narHash": "sha256-Zx1XSyJUNTq0hOK1Dy8wnOaNTKCi3tiEvHnbINigxYQ=",
         "owner": "m15a",
         "repo": "flake-awesome-neovim-plugins",
-        "rev": "c8fb121f3e2fdd04b5d4aff4f24fa2959c5d18e8",
+        "rev": "312c00319c2d44d1d0646310d5264ccecb958772",
         "type": "github"
       },
       "original": {
@@ -376,6 +392,7 @@
     },
     "root": {
       "inputs": {
+        "avante-src": "avante-src",
         "awesome-neovim-plugins": "awesome-neovim-plugins",
         "neovim-nightly-overlay": "neovim-nightly-overlay",
         "nixneovimplugins": "nixneovimplugins",
