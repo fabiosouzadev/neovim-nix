@@ -9,10 +9,10 @@
     todo-comments-nvim
     which-key-nvim
   ];
-  awesomeNeovimPlugins = with pkgs.awesomeNeovimPlugins; [
-    codecompanion-nvim
-  ];
+  # awesomeNeovimPlugins = with pkgs.awesomeNeovimPlugins; [
+  #   codecompanion-nvim
+  # ];
 in [
   vimPlugins
-  awesomeNeovimPlugins
+  # awesomeNeovimPlugins
 ]

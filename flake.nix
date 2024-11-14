@@ -38,17 +38,16 @@
     ...
   }:
     flake-utils.lib.eachDefaultSystem (system: let
-      system = "x86_64-linux";
       overlayNightlyNeovim = prev: final: {
         neovim = neovim-nightly-overlay.packages.${system}.neovim;
-        vimPlugins =
+      };
+      overlayMyCustomNeovim = prev: final: {
+       vimPlugins =
           final.vimPlugins
           // import ./plugins/pluginsFromGithub.nix {
             inherit inputs;
             pkgs = prev;
           };
-      };
-      overlayMyCustomNeovim = prev: final: {
         myCustomNeovim = import ./mkCustomNeovim.nix {pkgs = prev;};
       };
 
