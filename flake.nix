@@ -8,6 +8,9 @@
     };
     awesome-neovim-plugins.url = "github:m15a/flake-awesome-neovim-plugins";
     nixneovimplugins.url = "github:jooooscha/nixpkgs-vim-extra-plugins";
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
 
     ## pluginsFromGithub
     avante-src = {
@@ -31,31 +34,37 @@
     neovim-nightly-overlay,
     awesome-neovim-plugins,
     nixneovimplugins,
+    flake-utils,
     ...
-  }: let
-    system = "x86_64-linux";
-    overlayNightlyNeovim = prev: final: {
-      neovim = neovim-nightly-overlay.packages.${system}.neovim;
-      vimPlugins =
-        final.vimPlugins
-        // import ./plugins/pluginsFromGithub.nix {
-          inherit inputs;
-          pkgs = prev;
-        };
-    };
-    overlayMyCustomNeovim = prev: final: {
-      myCustomNeovim = import ./mkCustomNeovim.nix {pkgs = prev;};
-    };
-
-    pkgs = import nixpkgs {
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
       system = "x86_64-linux";
-      overlays = [overlayNightlyNeovim awesome-neovim-plugins.overlays.default nixneovimplugins.overlays.default overlayMyCustomNeovim];
-    };
-  in {
-    packages.x86_64-linux.default = pkgs.myCustomNeovim;
-    apps.x86_64-linux.default = {
-      type = "app";
-      program = "${pkgs.myCustomNeovim}/bin/nvim";
-    };
-  };
+      overlayNightlyNeovim = prev: final: {
+        neovim = neovim-nightly-overlay.packages.${system}.neovim;
+        vimPlugins =
+          final.vimPlugins
+          // import ./plugins/pluginsFromGithub.nix {
+            inherit inputs;
+            pkgs = prev;
+          };
+      };
+      overlayMyCustomNeovim = prev: final: {
+        myCustomNeovim = import ./mkCustomNeovim.nix {pkgs = prev;};
+      };
+
+      pkgs = import nixpkgs {
+        system = system;
+        overlays = [overlayNightlyNeovim awesome-neovim-plugins.overlays.default nixneovimplugins.overlays.default overlayMyCustomNeovim];
+      };
+    in {
+      packages = rec {
+        nvim = pkgs.myCustomNeovim;
+        default = nvim;
+      };
+
+      apps = rec {
+        nvim = flake-utils.lib.mkApp {drv = self.packages.${system}.nvim;};
+        default = nvim;
+      };
+    });
 }
